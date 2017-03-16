@@ -20,11 +20,9 @@ public class panel4 extends JPanel {
         JCheckBox cButton1 = new JCheckBox("1");
         JCheckBox cButton2 = new JCheckBox("2");
         JCheckBox cButton3 = new JCheckBox("3");
-        Box box4 = Box.createVerticalBox();
-        box4.add(cButton1);
-        box4.add(cButton2);
-        box4.add(cButton3);
-        add(box4);
+        add(cButton1);
+        add(cButton2);
+        add(cButton3);
         butto4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

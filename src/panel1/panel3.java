@@ -24,11 +24,9 @@ public class panel3 extends JPanel {
         gr.add(rButton1);
         gr.add(rButton2);
         gr.add(rButton3);
-        Box box3 = Box.createVerticalBox();
-        box3.add(rButton1);
-        box3.add(rButton2);
-        box3.add(rButton3);
-        add(box3);
+        add(rButton1);
+        add(rButton2);
+        add(rButton3);
         butto3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
