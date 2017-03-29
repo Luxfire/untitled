@@ -33,15 +33,19 @@ public class panel4 extends JPanel {
                 String b1= cButton1.getText();
                 String b2= cButton2.getText();
                 String b3= cButton3.getText();
-                String[] s1 = s.split(",");
-                while(i<s1.length) {
-                    if (s1[i].equals(b1)) cButton1.setSelected(true);
-                    if (s1[i].equals(b2)) cButton2.setSelected(true);
-                    if (s1[i].equals(b3)) cButton3.setSelected(true);
-
-                    if(!s1[i].equals(b1) && !s1[i].equals(b2) && !s1[i].equals(b3)) JOptionPane.showMessageDialog(null, "Элемента "+ s1[i] +" нет");
+                while(i<3) {
+                    if (s.equals(b1))
+                        if(!cButton1.isSelected())cButton1.setSelected(true);
+                             else cButton1.setSelected(false);
+                    if (s.equals(b2))
+                        if(!cButton2.isSelected())cButton2.setSelected(true);
+                             else cButton2.setSelected(false);
+                    if (s.equals(b3))
+                        if(!cButton3.isSelected())cButton3.setSelected(true);
+                             else cButton3.setSelected(false);
                     i++;
                 }
+                if(!s.equals(b1) && !s.equals(b2) && !s.equals(b3)) JOptionPane.showMessageDialog(null, "Элемента "+ s +" нет");
             }
 
         });

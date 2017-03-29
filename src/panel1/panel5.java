@@ -32,9 +32,10 @@ public class panel5 extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String s = text5.getText();
-                table.setValueAt(s, i++, 0);
-
+                if(i<5) {
+                    String s = text5.getText();
+                    table.setValueAt(s, i++, 0);
+                }
             }
         });
 
@@ -42,9 +43,10 @@ public class panel5 extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+            if(table.getSelectedColumn()==0&&table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())!=null) {
                 table.setValueAt(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()), table.getSelectedRow(), table.getSelectedColumn() + 1);
                 table.setValueAt(null, table.getSelectedRow(), table.getSelectedColumn());
-
+            }
             }
         });
 
@@ -52,9 +54,10 @@ public class panel5 extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                table.setValueAt(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()), table.getSelectedRow(), table.getSelectedColumn() - 1);
-                table.setValueAt(null, table.getSelectedRow(), table.getSelectedColumn());
-
+            if(table.getSelectedColumn()==1&&table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())!=null){
+                    table.setValueAt(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()), table.getSelectedRow(), table.getSelectedColumn() - 1);
+                    table.setValueAt(null, table.getSelectedRow(), table.getSelectedColumn());
+                }
             }
         });
     }

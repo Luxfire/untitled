@@ -25,7 +25,7 @@ public class panel2 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                butto2.setText(text2.getText());
+               if(text2.getText()!=null) butto2.setText(text2.getText());
             }
         });
 
