@@ -70,7 +70,6 @@ public class FrameDel {
 
         frameDel.add(panel);
         frameDel.setSize(400, 250);
-        frameDel.setVisible(true);
         frameDel.setLocationRelativeTo(null);
 
         buttonDel.addActionListener(new ActionListener() {

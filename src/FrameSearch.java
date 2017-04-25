@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,6 +8,10 @@ import java.awt.event.ActionListener;
  */
 public class FrameSearch {
     JFrame frameSearch;
+    JLabel labelFio;
+    JLabel labelGroup;
+    JLabel labelWork;
+    JLabel labelSem;
     JPanel panel;
     JLabel labelLastName;
     JTextField textField1;
@@ -67,10 +72,42 @@ public class FrameSearch {
         buttonSearch.setLocation(40,150);
         panel.add(buttonSearch);
 
-        frameSearch.add(panel);
-        frameSearch.setSize(400, 250);
-        frameSearch.setVisible(true);
+        labelFio = new JLabel("Фио");
+        labelFio.setSize(200, 30);
+        labelFio.setLocation(0, 190);
+        labelFio.setBorder(BorderFactory.createEtchedBorder());
+        panel.add(labelFio);
+         createlabel(panel);
+
+        labelGroup = new JLabel("Группа");
+        labelGroup.setSize(100, 30);
+        labelGroup.setBorder(BorderFactory.createEtchedBorder());
+        labelGroup.setLocation(200, 190);
+        panel.add(labelGroup);
+
+        labelWork = new JLabel("Общественные работы");
+        labelWork.setSize(1300, 15);
+        labelWork.setBorder(BorderFactory.createEtchedBorder());
+        labelWork.setLocation(300, 190);
+        panel.add(labelWork);
+
+
+
+        frameSearch.setContentPane(panel);
+        frameSearch.setExtendedState(Frame.MAXIMIZED_BOTH);
         frameSearch.setLocationRelativeTo(null);
 
+    }
+
+    void createlabel(JPanel panel) {
+        int x = 300;
+        for (int i = 1; i < 11; i++) {
+            labelSem = new JLabel(i + " семестр");
+            labelSem.setSize(130, 15);
+            labelSem.setBorder(BorderFactory.createEtchedBorder());
+            labelSem.setLocation(x, 205);
+            panel.add(labelSem);
+            x += 130;
+        }
     }
 }

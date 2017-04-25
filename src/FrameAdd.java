@@ -1,10 +1,10 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
+/**
+ * Created by user on 13.04.2017.
+ */
 class FrameAdd{
-     SimpleWindow simpleWindow;
+
     JFrame frameAdd;
     JPanel panel;
     JButton buttonAdd;
@@ -28,8 +28,8 @@ class FrameAdd{
     JTextField textWork9;
     JTextField textWork10;
 
-    FrameAdd(StudentList studentList, SimpleWindow simpleWindow){
-    this.simpleWindow = simpleWindow;
+    FrameAdd(){
+
         frameAdd = new JFrame("Добавление");
         frameAdd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         panel = new JPanel();
@@ -39,7 +39,7 @@ class FrameAdd{
         labelLastName.setLocation(0,0);
         labelLastName.setSize(200,30);
         textLastName = new JTextField();
-        textLastName.setText("aaa");
+        textLastName.setText("Трушков");
         textLastName.setSize(200,30);
         textLastName.setLocation(0,30);
         panel.add(labelLastName);
@@ -49,7 +49,7 @@ class FrameAdd{
         labelFirstName.setLocation(210,0);
         labelFirstName.setSize(200,30);
         textFirstName = new JTextField();
-        textFirstName.setText("sss");
+        textFirstName.setText("Артем");
         textFirstName.setSize(200,30);
         textFirstName.setLocation(210,30);
         panel.add(labelFirstName);
@@ -59,7 +59,7 @@ class FrameAdd{
         labelSurName.setLocation(420,0);
         labelSurName.setSize(200,30);
         textSurName = new JTextField();
-        textSurName.setText("fff");
+        textSurName.setText("Сергеевич");
         textSurName.setSize(200,30);
         textSurName.setLocation(420,30);
         panel.add(labelSurName);
@@ -68,8 +68,8 @@ class FrameAdd{
         labelGroup = new JLabel("Группа:");
         labelGroup.setLocation(0,60);
         labelGroup.setSize(200,30);
-       textGroup = new JTextField();
-       textGroup.setText("12");
+        textGroup = new JTextField();
+        textGroup.setText("521701");
         textGroup.setSize(200,30);
         textGroup.setLocation(0,90);
         panel.add(labelGroup);
@@ -77,11 +77,11 @@ class FrameAdd{
 
         for(int i =0; i<10;i++)
         {
-          labelWork = new JLabel();
-         labelWork.setSize(200,30);
-         labelWork.setText("Работа на семестр "+(i+1)+":");
-         labelWork.setLocation(0,i*30+120);
-         panel.add(labelWork);
+            labelWork = new JLabel();
+            labelWork.setSize(200,30);
+            labelWork.setText("Работа на семестр "+(i+1)+":");
+            labelWork.setLocation(0,i*30+120);
+            panel.add(labelWork);
         }
 
         textWork1 = new JTextField();
@@ -134,14 +134,13 @@ class FrameAdd{
         textWork10.setLocation(210,390);
         panel.add(textWork10);
 
-         buttonAdd = new JButton("Добавить");
+        buttonAdd = new JButton("Добавить");
         buttonAdd.setSize(200,30);
         buttonAdd.setLocation(210,420);
         panel.add(buttonAdd);
 
         frameAdd.add(panel);
         frameAdd.setSize(635, 490);
-        frameAdd.setVisible(true);
         frameAdd.setLocationRelativeTo(null);
 
 

@@ -40,6 +40,7 @@ FrameSearchResult()
     frame.setContentPane(panel);
     frame.setSize(1220, 500);
     frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
 }
     void createlabel(JPanel panel) {
         int x = 200;

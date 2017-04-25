@@ -1,8 +1,9 @@
+
 import java.util.*;
 
 public class StudentList {
      List<Student> studentList;
-     StudentList()
+     public StudentList()
     {
      studentList = new ArrayList<Student>();
     }
