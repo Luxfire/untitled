@@ -72,10 +72,5 @@ public class FrameDel {
         frameDel.setSize(400, 250);
         frameDel.setLocationRelativeTo(null);
 
-        buttonDel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-}}
+}
+}

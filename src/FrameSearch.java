@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
  * Created by user on 09.04.2017.
  */
 public class FrameSearch {
+    JLabel studentLastName[];
+    JLabel studentGroup[];
+    JLabel studentSem[][];
     JFrame frameSearch;
     JLabel labelFio;
     JLabel labelGroup;
@@ -108,6 +111,47 @@ public class FrameSearch {
             labelSem.setLocation(x, 205);
             panel.add(labelSem);
             x += 130;
+        }
+    }
+
+    void inicializedSearchLabel(int size) {
+        studentLastName = new JLabel[size];
+        studentGroup = new JLabel[size];
+        studentSem = new JLabel[size][10];
+    }
+
+    void createSearchResult(int counter) {
+
+        studentLastName[counter] = new JLabel();
+            studentLastName[counter].setBorder(BorderFactory.createEtchedBorder());
+            studentLastName[counter].setSize(200, 30);
+            studentLastName[counter].setLocation(0, counter * 30 + 220);
+
+            studentGroup[counter] = new JLabel();
+            studentGroup[counter].setBorder(BorderFactory.createEtchedBorder());
+            studentGroup[counter].setSize(100, 30);
+            studentGroup[counter].setLocation(200, counter * 30 + 220);
+
+            for (int k = 1; k < 11; k++) {
+                int x = 170;
+                studentSem[counter][k - 1] = new JLabel();
+                studentSem[counter][k - 1].setBorder(BorderFactory.createEtchedBorder());
+                studentSem[counter][k - 1].setSize(130, 30);
+                studentSem[counter][k - 1].setLocation(x + k * 130, counter * 30 + 220);
+            }
+
+
+    }
+
+    void cleanSearchWindow(int counter) {
+        for(int indexStudent=0;indexStudent<counter;indexStudent++){
+            //   studentLastName[indexStudent].setText("");
+            frameSearch.remove(studentLastName[indexStudent]);
+            frameSearch.remove(studentGroup[indexStudent]);
+            // studentGroup[indexStudent].setText("");
+            for (int k = 1; k < 11; k++)
+                frameSearch.remove(studentSem[indexStudent][k-1]);
+            //  studentSem[indexStudent][k-1].setText("");
         }
     }
 }

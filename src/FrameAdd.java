@@ -142,10 +142,6 @@ class FrameAdd{
         frameAdd.add(panel);
         frameAdd.setSize(635, 490);
         frameAdd.setLocationRelativeTo(null);
-
-
-
-
     }
 
 }

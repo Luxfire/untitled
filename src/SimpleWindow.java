@@ -25,6 +25,10 @@ public class SimpleWindow {
     JButton buttonFirstPage;
     JButton buttonNextPage;
     JButton buttonLastPage;
+    JLabel pageFromPages;
+    JTextField textNumStudentOnPage;
+    JLabel labelNumStudentOnPage;
+    JButton changeNumStudentOnPage;
 
     JFrame getFrame(){return frame;}
     public SimpleWindow() {
@@ -84,17 +88,42 @@ public class SimpleWindow {
         buttonNextPage.setSize(50,30);
         buttonNextPage.setLocation(100,210);
         panel.add(buttonNextPage);
-        SimpleWindow that = this;
-        frameAdd = new FrameAdd();
-        frameDel = new FrameDel();
-        frameSearch = new FrameSearch();
         buttonLastPage = new JButton(">>");
         buttonLastPage.setSize(50,30);
         buttonLastPage.setLocation(150,210);
         panel.add(buttonLastPage);
+
+        pageFromPages = new JLabel();
+        pageFromPages.setSize(100,30);
+        pageFromPages.setLocation(0,270);
+        pageFromPages.setText("Cтраница: "+1+"/"+1);
+        panel.add(pageFromPages);
+
+          labelNumStudentOnPage = new JLabel();
+          labelNumStudentOnPage.setText("Количество студентов на странице");
+          labelNumStudentOnPage.setLocation(0,240);
+          labelNumStudentOnPage.setSize(210,30);
+          panel.add(labelNumStudentOnPage);
+
+        textNumStudentOnPage = new JTextField("3");
+        textNumStudentOnPage.setSize(30,30);
+        textNumStudentOnPage.setLocation(210,240);
+        panel.add(textNumStudentOnPage);
+
+        changeNumStudentOnPage = new JButton("Изменить");
+        changeNumStudentOnPage.setSize(100,30);
+        changeNumStudentOnPage.setLocation(240,240);
+        panel.add(changeNumStudentOnPage);
+
+        frameAdd = new FrameAdd();
+        frameDel = new FrameDel();
+        frameSearch = new FrameSearch();
         frame.setContentPane(panel);
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setVisible(true);
+        createSimpleWindow();
+
+
       buttonAdd.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
@@ -137,30 +166,40 @@ public class SimpleWindow {
         }
     }
 
-   /* void createSimpleWindow(int counter) {
-        studentLastName = new JLabel[counter];
-        studentGroup = new JLabel[counter];
-        studentSem = new JLabel[counter][10];
-        for (int indexStudent = 0; indexStudent < 5; indexStudent++) {
-            studentLastName[indexStudent]= new JLabel();
-            studentLastName[indexStudent].setBorder(BorderFactory.createEtchedBorder());
-            studentLastName[indexStudent].setSize(200, 30);
-            studentLastName[indexStudent].setLocation(0, indexStudent * 30 + 30);
+    void createSimpleWindow() {
+       studentLastName = new JLabel[5];
+       studentGroup = new JLabel[5];
+       studentSem = new JLabel[5][10];
+       for (int indexStudent = 0; indexStudent < 5; indexStudent++) {
+           studentLastName[indexStudent] = new JLabel();
+           studentLastName[indexStudent].setBorder(BorderFactory.createEtchedBorder());
+           studentLastName[indexStudent].setSize(200, 30);
+           studentLastName[indexStudent].setLocation(0, indexStudent * 30 + 30);
 
-            studentGroup[indexStudent] = new JLabel();
-            studentGroup[indexStudent].setBorder(BorderFactory.createEtchedBorder());
-            studentGroup[indexStudent].setSize(100, 30);
-            studentGroup[indexStudent].setLocation(200, indexStudent * 30 + 30);
+           studentGroup[indexStudent] = new JLabel();
+           studentGroup[indexStudent].setBorder(BorderFactory.createEtchedBorder());
+           studentGroup[indexStudent].setSize(100, 30);
+           studentGroup[indexStudent].setLocation(200, indexStudent * 30 + 30);
 
-            for (int k = 1; k < 11; k++) {
-                int x = 170;
-                studentSem[indexStudent][k-1]= new JLabel();
-                studentSem[indexStudent][k-1].setBorder(BorderFactory.createEtchedBorder());
-                studentSem[indexStudent][k-1].setSize(130, 30);
-                studentSem[indexStudent][k-1].setLocation(x + k * 130, indexStudent * 30 + 30);
-            }
-        }
+           for (int k = 1; k < 11; k++) {
+               int x = 170;
+               studentSem[indexStudent][k - 1] = new JLabel();
+               studentSem[indexStudent][k - 1].setBorder(BorderFactory.createEtchedBorder());
+               studentSem[indexStudent][k - 1].setSize(130, 30);
+               studentSem[indexStudent][k - 1].setLocation(x + k * 130, indexStudent * 30 + 30);
+           }
+       }
+   }
 
-    }*/
+    void cleanSimpleWindow() {
+           for(int indexStudent=0;indexStudent<5;indexStudent++){
+              frame.remove(studentLastName[indexStudent]);
+               frame.remove(studentGroup[indexStudent]);
+               for (int k = 1; k < 11; k++)
+                  frame.remove(studentSem[indexStudent][k-1]);
+           }
+       }
 
-}
+   }
+
+

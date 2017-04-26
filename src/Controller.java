@@ -8,14 +8,10 @@ import java.awt.event.ActionListener;
 public class Controller {
     SimpleWindow simpleWindow;
     StudentList studentList;
-    JLabel studentLastName[] = new JLabel[5];
-    JLabel studentGroup[] = new JLabel[5];
-    JLabel studentSem[][] = new JLabel[5][10];
 
     Controller() {
         studentList = new StudentList();
         simpleWindow = new SimpleWindow();
-          createSimpleWindow();
                simpleWindow.frameAdd.buttonAdd.addActionListener(new ActionListener() {
                  @Override
                  public void actionPerformed(ActionEvent e) {
@@ -44,16 +40,20 @@ public class Controller {
                  }
              });
                simpleWindow.frameSearch.buttonSearch.addActionListener(new ActionListener() {
+
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        int counter = 0;
+
+                        simpleWindow.frameSearch.inicializedSearchLabel(studentList.studentList.size());
+                       int counter =0;
                         simpleWindow.frameSearch.frameSearch.repaint();
                         for (int index = 0; index < studentList.studentList.size(); index++) {
 
                             if (simpleWindow.frameSearch.group.isSelected()) {
                                 if (studentList.studentList.get(index).lastName.equals(simpleWindow.frameSearch.textField1.getText()) &&
                                         studentList.studentList.get(index).group == Integer.parseInt(simpleWindow.frameSearch.textField2.getText())) {
-                                    updateSearchResult(counter, index, simpleWindow.frameSearch.frameSearch);
+                                    simpleWindow.frameSearch.createSearchResult(counter);
+                                    updateSearchResult(counter, index, simpleWindow.frameSearch);
                                     counter++;
                                 }
                             }
@@ -61,8 +61,8 @@ public class Controller {
                                 if (studentList.studentList.get(index).lastName.equals(simpleWindow.frameSearch.textField1.getText())) {
                                     for (int numberOfSem = 0; numberOfSem < 10; numberOfSem++)
                                         if (studentList.studentList.get(index).semNumber[numberOfSem].equals(simpleWindow.frameSearch.textField2.getText())) {
-
-                                            updateSearchResult(counter, index, simpleWindow.frameSearch.frameSearch);
+                                            simpleWindow.frameSearch.createSearchResult(counter);
+                                            updateSearchResult(counter, index, simpleWindow.frameSearch);
                                             counter++;
                                         }
                                 }
@@ -77,14 +77,17 @@ public class Controller {
                                             sumsWork++;
                                         }
                                     if (sumsWork == Integer.parseInt(simpleWindow.frameSearch.textField2.getText())) {
-                                        updateSearchResult(counter, index, simpleWindow.frameSearch.frameSearch);
+                                        simpleWindow.frameSearch.createSearchResult(counter);
+                                        updateSearchResult(counter, index, simpleWindow.frameSearch);
                                         counter++;
                                     }
                                 }
                             }
                         }
-                        if (counter > 0) simpleWindow.frameSearch.frameSearch.setVisible(true);
-                        JOptionPane.showMessageDialog(null, "Найдено записей " + counter);
+                        if(counter == 0)
+                        JOptionPane.showMessageDialog(null, "Найдено записей не найдено");
+                         simpleWindow.frameSearch.cleanSearchWindow(counter);
+
                     }
                 });
                simpleWindow.frameDel.buttonDel.addActionListener(new ActionListener() {
@@ -131,92 +134,88 @@ public class Controller {
                             }
                         }
                         JOptionPane.showMessageDialog(null, "Удалено записей " + counter);
-                        cleanSimpleWindow();
+                        simpleWindow.cleanSimpleWindow();
+                        updateSimpleWindow();
+                        simpleWindow.getFrame().repaint();
+                        studentList.currentPage = 1;
+                    }
+                });
+               simpleWindow.changeNumStudentOnPage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                studentList.studentOnPage= Integer.parseInt(simpleWindow.textNumStudentOnPage.getText());
+                simpleWindow.cleanSimpleWindow();
+                updateSimpleWindow();
+                simpleWindow.getFrame().repaint();
+            }
+        });
+               simpleWindow.buttonNextPage.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        studentList.nextPage();
+                        simpleWindow.cleanSimpleWindow();
                         updateSimpleWindow();
                         simpleWindow.getFrame().repaint();
                     }
                 });
+               simpleWindow.buttonPrevPage.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                       studentList.prevPage();
+                       simpleWindow.cleanSimpleWindow();
+                       updateSimpleWindow();
+                       simpleWindow.getFrame().repaint();
+                   }
+               });
+               simpleWindow.buttonLastPage.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                       studentList.lastPage();
+                       simpleWindow.cleanSimpleWindow();
+                       updateSimpleWindow();
+                       simpleWindow.getFrame().repaint();
+                   }
+               });
+               simpleWindow.buttonFirstPage.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                       studentList.firstPage();
+                       simpleWindow.cleanSimpleWindow();
+                       updateSimpleWindow();
+                       simpleWindow.getFrame().repaint();
+                   }
+               });
             }
 
-    void updateSearchResult(int counter, int index, JFrame frameSearch) {
-        String[] s = studentList.get(index).semNumber;
-        JLabel studentLastNameSearch = new JLabel();
-        studentLastNameSearch.setBorder(BorderFactory.createEtchedBorder());
-        studentLastNameSearch.setSize(200, 30);
-        studentLastNameSearch.setLocation(0, counter * 30 + 220);
-        studentLastNameSearch.setText(studentList.get(index).lastName + " " + studentList.get(index).firstName.substring(0, 1) + "." + studentList.get(index).surName.substring(0, 1) + ".");
-        frameSearch.add(studentLastNameSearch);
-
-
-        JLabel studentGroupSearch = new JLabel();
-        studentGroupSearch.setBorder(BorderFactory.createEtchedBorder());
-        studentGroupSearch.setSize(100, 30);
-        studentGroupSearch.setLocation(200, counter * 30 + 220);
-        studentGroupSearch.setText(Integer.toString(studentList.get(index).group));
-        frameSearch.add(studentGroupSearch);
-
-        for (int k = 1; k < 11; k++) {
-            int x = 170;
-            JLabel studentSemSearch = new JLabel();
-            studentSemSearch.setBorder(BorderFactory.createEtchedBorder());
-            studentSemSearch.setSize(130, 30);
-            studentSemSearch.setLocation(x + k * 130, counter * 30 + 220);
-            studentSemSearch.setText(s[k - 1]);
-            frameSearch.add(studentSemSearch);
-        }
-
+    void updateSearchResult(int counter, int indexStudent, FrameSearch frameSearch) {
+        String[] s = studentList.get(indexStudent).semNumber;
+            frameSearch.studentLastName[counter].setText(studentList.get(indexStudent).lastName + " " + studentList.get(indexStudent).firstName.substring(0, 1) + "." + studentList.get(indexStudent).surName.substring(0, 1) + ".");
+            frameSearch.frameSearch.add(frameSearch.studentLastName[counter]);
+            frameSearch.studentGroup[counter].setText(Integer.toString(studentList.get(indexStudent).group));
+            frameSearch.frameSearch.add(frameSearch.studentGroup[counter]);
+            for (int k = 1; k < 11; k++){
+                frameSearch.studentSem[counter][k-1].setText(s[k - 1]);
+               frameSearch.frameSearch.add(frameSearch.studentSem[counter][k-1]);}
     }
 
-   void updateSimpleWindow()
+   void updateSimpleWindow() {
+       int currentIndexLabel = 0;
+       simpleWindow.pageFromPages.setText("Страница: "+studentList.currentPage+"/"+studentList.getNumberMaxPage());
+    for(int indexStudent=studentList.currentPage*studentList.studentOnPage-studentList.studentOnPage;
+        indexStudent<studentList.currentPage*studentList.studentOnPage && indexStudent< studentList.studentList.size();
+        indexStudent++)
    {
-
-    for(int indexStudent=0;indexStudent<studentList.studentList.size();indexStudent++)
-   {    String[] s = studentList.get(indexStudent).semNumber;
-       studentLastName[indexStudent].setText(studentList.get(indexStudent).lastName + " " + studentList.get(indexStudent).firstName.substring(0, 1) + "." + studentList.get(indexStudent).surName.substring(0, 1) + ".");
-       simpleWindow.getFrame().add(studentLastName[indexStudent]);
-       studentGroup[indexStudent].setText(Integer.toString(studentList.get(indexStudent).group));
-       simpleWindow.getFrame().add(studentGroup[indexStudent]);
+        String[] s = studentList.get(indexStudent).semNumber;
+       simpleWindow.studentLastName[currentIndexLabel].setText(studentList.get(indexStudent).lastName + " " + studentList.get(indexStudent).firstName.substring(0, 1) + "." + studentList.get(indexStudent).surName.substring(0, 1) + ".");
+       simpleWindow.getFrame().add(simpleWindow.studentLastName[currentIndexLabel]);
+       simpleWindow.studentGroup[currentIndexLabel].setText(Integer.toString(studentList.get(indexStudent).group));
+       simpleWindow.getFrame().add(simpleWindow.studentGroup[currentIndexLabel]);
        for (int k = 1; k < 11; k++){
-           studentSem[indexStudent][k-1].setText(s[k - 1]);
-       simpleWindow.getFrame().add(studentSem[indexStudent][k-1]);}
+           simpleWindow.studentSem[currentIndexLabel][k-1].setText(s[k - 1]);
+       simpleWindow.getFrame().add(simpleWindow.studentSem[currentIndexLabel][k-1]);}
+       currentIndexLabel++;
    }
 
    }
-
-    void cleanSimpleWindow()
-    {
-        for(int indexStudent=0;indexStudent<5;indexStudent++){
-         //   studentLastName[indexStudent].setText("");
-         simpleWindow.getFrame().remove(studentLastName[indexStudent]);
-            simpleWindow.getFrame().remove(studentGroup[indexStudent]);
-           // studentGroup[indexStudent].setText("");
-            for (int k = 1; k < 11; k++)
-                simpleWindow.getFrame().remove(studentSem[indexStudent][k-1]);
-              //  studentSem[indexStudent][k-1].setText("");
-        }
-    }
-
-    void createSimpleWindow() {
-        for (int indexStudent = 0; indexStudent < 5; indexStudent++) {
-            studentLastName[indexStudent]= new JLabel();
-            studentLastName[indexStudent].setBorder(BorderFactory.createEtchedBorder());
-            studentLastName[indexStudent].setSize(200, 30);
-            studentLastName[indexStudent].setLocation(0, indexStudent * 30 + 30);
-
-            studentGroup[indexStudent] = new JLabel();
-            studentGroup[indexStudent].setBorder(BorderFactory.createEtchedBorder());
-            studentGroup[indexStudent].setSize(100, 30);
-            studentGroup[indexStudent].setLocation(200, indexStudent * 30 + 30);
-
-            for (int k = 1; k < 11; k++) {
-                int x = 170;
-                studentSem[indexStudent][k-1]= new JLabel();
-                studentSem[indexStudent][k-1].setBorder(BorderFactory.createEtchedBorder());
-                studentSem[indexStudent][k-1].setSize(130, 30);
-                studentSem[indexStudent][k-1].setLocation(x + k * 130, indexStudent * 30 + 30);
-            }
-        }
-
-    }
 
 }
