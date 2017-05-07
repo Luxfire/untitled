@@ -64,8 +64,6 @@ public class FileWorker {
                             surName=attributes.getValue(SUR_NAME);
                             group=attributes.getValue(GROUP);
                         } else if (qName.equalsIgnoreCase(SOCIAL_WORK)) {
-
-                            socialWork.add(attributes.getValue(SOCIAL_WORK));
                             isSocialWork = true;
                         }
                     }
@@ -107,6 +105,7 @@ public class FileWorker {
             if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
                 Document doc = docBuilder.newDocument();
                 Element rootElement = doc.createElement(STUDENTS);
                 doc.appendChild(rootElement);
@@ -114,15 +113,19 @@ public class FileWorker {
                 for (Student student : model.getStudentList()) {
                     Element studentEl = doc.createElement(STUDENT);
                     rootElement.appendChild(studentEl);
+
                     Attr attr = doc.createAttribute(FIRST_NAME);
                     attr.setValue(student.getFirstName());
                     studentEl.setAttributeNode(attr);
+
                     attr = doc.createAttribute(LAST_NAME);
                     attr.setValue(student.getLastName());
                     studentEl.setAttributeNode(attr);
+
                     attr = doc.createAttribute(SUR_NAME);
                     attr.setValue(student.getSurName());
                     studentEl.setAttributeNode(attr);
+
                     attr = doc.createAttribute(GROUP);
                     attr.setValue(Integer.toString(student.getGroup()));
                     studentEl.setAttributeNode(attr);
