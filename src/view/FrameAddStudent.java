@@ -1,34 +1,97 @@
+package view;
+
 import javax.swing.*;
 
-/**
- * Created by user on 13.04.2017.
- */
-class FrameAdd{
+public class FrameAddStudent{
 
-    JFrame frameAdd;
-    JPanel panel;
-    JButton buttonAdd;
-    JLabel labelLastName;
-    JLabel labelFirstName;
-    JTextField textLastName;
-    JTextField textFirstName;
-    JLabel labelSurName;
-    JTextField textSurName;
-    JLabel labelGroup;
-    JTextField textGroup;
-    JLabel labelWork;
-    JTextField textWork1;
-    JTextField textWork2;
-    JTextField textWork3;
-    JTextField textWork4;
-    JTextField textWork5;
-    JTextField textWork6;
-    JTextField textWork7;
-    JTextField textWork8;
-    JTextField textWork9;
-    JTextField textWork10;
+    private JPanel panel;
+    private JButton buttonAdd;
+    private JLabel labelLastName;
+    private JLabel labelFirstName;
+    private JTextField textLastName;
+    private JTextField textFirstName;
+    private JLabel labelSurName;
+    private JTextField textSurName;
+    private JLabel labelGroup;
+    private JTextField textGroup;
+    private JLabel labelWork;
+    private JTextField textWork1;
+    private JTextField textWork2;
+    private JTextField textWork3;
+    private JTextField textWork4;
+    private JTextField textWork5;
+    private JTextField textWork6;
+    private JTextField textWork7;
+    private JTextField textWork8;
+    private JTextField textWork9;
+    private JTextField textWork10;
+    private JFrame frameAdd;
 
-    FrameAdd(){
+    public JTextField getTextLastName() {
+        return textLastName;
+    }
+
+    public JTextField getTextFirstName() {
+        return textFirstName;
+    }
+
+    public JTextField getTextSurName() {
+        return textSurName;
+    }
+
+    public JTextField getTextGroup() {
+        return textGroup;
+    }
+
+    public JButton getButtonAdd() {
+        return buttonAdd;
+    }
+
+    public JTextField getTextWork1() {
+        return textWork1;
+    }
+
+    public JTextField getTextWork2() {
+        return textWork2;
+    }
+
+    public JTextField getTextWork3() {
+        return textWork3;
+    }
+
+    public JTextField getTextWork4() {
+        return textWork4;
+    }
+
+    public JTextField getTextWork5() {
+        return textWork5;
+    }
+
+    public JTextField getTextWork6() {
+        return textWork6;
+    }
+
+    public JTextField getTextWork7() {
+        return textWork7;
+    }
+
+    public JTextField getTextWork8() {
+        return textWork8;
+    }
+
+    public JTextField getTextWork9() {
+        return textWork9;
+    }
+
+    public JTextField getTextWork10() {
+        return textWork10;
+    }
+
+    public JFrame getFrameAdd() {
+        return frameAdd;
+    }
+
+    FrameAddStudent(){
 
         frameAdd = new JFrame("Добавление");
         frameAdd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -39,7 +102,6 @@ class FrameAdd{
         labelLastName.setLocation(0,0);
         labelLastName.setSize(200,30);
         textLastName = new JTextField();
-        textLastName.setText("Трушков");
         textLastName.setSize(200,30);
         textLastName.setLocation(0,30);
         panel.add(labelLastName);
@@ -49,7 +111,6 @@ class FrameAdd{
         labelFirstName.setLocation(210,0);
         labelFirstName.setSize(200,30);
         textFirstName = new JTextField();
-        textFirstName.setText("Артем");
         textFirstName.setSize(200,30);
         textFirstName.setLocation(210,30);
         panel.add(labelFirstName);
@@ -59,7 +120,6 @@ class FrameAdd{
         labelSurName.setLocation(420,0);
         labelSurName.setSize(200,30);
         textSurName = new JTextField();
-        textSurName.setText("Сергеевич");
         textSurName.setSize(200,30);
         textSurName.setLocation(420,30);
         panel.add(labelSurName);
@@ -69,18 +129,17 @@ class FrameAdd{
         labelGroup.setLocation(0,60);
         labelGroup.setSize(200,30);
         textGroup = new JTextField();
-        textGroup.setText("521701");
         textGroup.setSize(200,30);
         textGroup.setLocation(0,90);
         panel.add(labelGroup);
         panel.add(textGroup);
 
-        for(int i =0; i<10;i++)
+        for(int semWork =0; semWork<10;semWork++)
         {
             labelWork = new JLabel();
             labelWork.setSize(200,30);
-            labelWork.setText("Работа на семестр "+(i+1)+":");
-            labelWork.setLocation(0,i*30+120);
+            labelWork.setText("Работа на семестр "+(semWork+1)+":");
+            labelWork.setLocation(0,semWork*30+120);
             panel.add(labelWork);
         }
 

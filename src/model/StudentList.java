@@ -1,20 +1,18 @@
+package model;
+
+import model.Student;
 
 import java.util.*;
 
 public class StudentList {
-     List<Student> studentList;
-     int currentPage;
-     int studentOnPage;
+     private List<Student> studentList;
+     private int currentPage;
+     private int studentOnPage;
      public StudentList()
     {
      currentPage=1;
      studentOnPage=3;
      studentList = new ArrayList<Student>();
-    }
-
-    public Student get(int i)
-    {
-        return studentList.get(i);
     }
 
     public void nextPage()
@@ -49,5 +47,23 @@ public class StudentList {
   studentList.add(student);
  }
 
+    public List<Student> getStudentList() {
+        return studentList;
+    }
 
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public void setStudentOnPage(int studentOnPage) {
+        this.studentOnPage = studentOnPage;
+    }
+
+    public int getStudentOnPage() {
+        return studentOnPage;
+    }
 }

@@ -1,3 +1,5 @@
+package view;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,24 +9,96 @@ import java.awt.event.ActionListener;
  * Created by user on 09.04.2017.
  */
 public class FrameSearch {
-    JLabel studentLastName[];
-    JLabel studentGroup[];
-    JLabel studentSem[][];
-    JFrame frameSearch;
-    JLabel labelFio;
-    JLabel labelGroup;
-    JLabel labelWork;
-    JLabel labelSem;
-    JPanel panel;
-    JLabel labelLastName;
-    JTextField textField1;
-    JLabel paramForDel;
-    JRadioButton group;
-    JRadioButton typeWork;
-    JRadioButton sumWorks;
-    ButtonGroup rGroup;
-    JTextField textField2;
-    JButton buttonSearch;
+    private JLabel studentLastName[];
+    private JLabel studentGroup[];
+    private JLabel studentSem[][];
+    private JFrame frameSearch;
+    private JLabel labelFio;
+    private JLabel labelGroup;
+    private JLabel labelWork;
+    private JLabel labelSem;
+    private JPanel panel;
+    private JLabel labelLastName;
+    private JTextField textField1;
+    private JLabel paramForDel;
+    private JRadioButton group;
+    private JRadioButton typeWork;
+    private JRadioButton sumWorks;
+    private ButtonGroup rGroup;
+    private JTextField textField2;
+    private JButton buttonSearch;
+
+    public JLabel[] getStudentLastName() {
+        return studentLastName;
+    }
+
+    public JLabel[] getStudentGroup() {
+        return studentGroup;
+    }
+
+    public JLabel[][] getStudentSem() {
+        return studentSem;
+    }
+
+    public JLabel getLabelFio() {
+        return labelFio;
+    }
+
+    public JLabel getLabelGroup() {
+        return labelGroup;
+    }
+
+    public JLabel getLabelWork() {
+        return labelWork;
+    }
+
+    public JLabel getLabelSem() {
+        return labelSem;
+    }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public JLabel getLabelLastName() {
+        return labelLastName;
+    }
+
+    public JTextField getTextField1() {
+        return textField1;
+    }
+
+    public JLabel getParamForDel() {
+        return paramForDel;
+    }
+
+    public JRadioButton getGroup() {
+        return group;
+    }
+
+    public JRadioButton getTypeWork() {
+        return typeWork;
+    }
+
+    public JRadioButton getSumWorks() {
+        return sumWorks;
+    }
+
+    public ButtonGroup getrGroup() {
+        return rGroup;
+    }
+
+    public JTextField getTextField2() {
+        return textField2;
+    }
+
+    public JButton getButtonSearch() {
+        return buttonSearch;
+    }
+
+    public JFrame getFrameSearch() {
+        return frameSearch;
+    }
 
     FrameSearch(){
         frameSearch = new JFrame("Найти");
@@ -114,13 +188,13 @@ public class FrameSearch {
         }
     }
 
-    void inicializedSearchLabel(int size) {
+    public void inicializedSearchLabel(int size) {
         studentLastName = new JLabel[size];
         studentGroup = new JLabel[size];
         studentSem = new JLabel[size][10];
     }
 
-    void createSearchResult(int counter) {
+    public void createSearchResult(int counter) {
 
         studentLastName[counter] = new JLabel();
             studentLastName[counter].setBorder(BorderFactory.createEtchedBorder());
@@ -143,15 +217,14 @@ public class FrameSearch {
 
     }
 
-    void cleanSearchWindow(int counter) {
+    public void cleanSearchWindow(int counter) {
         for(int indexStudent=0;indexStudent<counter;indexStudent++){
-            //   studentLastName[indexStudent].setText("");
+
             frameSearch.remove(studentLastName[indexStudent]);
             frameSearch.remove(studentGroup[indexStudent]);
-            // studentGroup[indexStudent].setText("");
             for (int k = 1; k < 11; k++)
                 frameSearch.remove(studentSem[indexStudent][k-1]);
-            //  studentSem[indexStudent][k-1].setText("");
+
         }
     }
 }

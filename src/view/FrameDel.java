@@ -1,3 +1,5 @@
+package view;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,17 +8,61 @@ import java.awt.event.ActionListener;
  * Created by user on 09.04.2017.
  */
 public class FrameDel {
-    JFrame frameDel;
-    JPanel panel;
-    JLabel labelLastName;
-    JTextField textField1;
-    JLabel paramForDel;
-    JRadioButton group;
-    JRadioButton typeWork;
-    JRadioButton sumWorks;
-    ButtonGroup rGroup;
-    JTextField textField2;
-    JButton buttonDel;
+    private JFrame frameDel;
+    private JPanel panel;
+    private JLabel labelLastName;
+    private JTextField textField1;
+    private JLabel paramForDel;
+    private JRadioButton group;
+    private JRadioButton typeWork;
+    private JRadioButton sumWorks;
+    private ButtonGroup rGroup;
+    private JTextField textField2;
+    private JButton buttonDel;
+
+    public JFrame getFrameDel() {
+        return frameDel;
+    }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public JLabel getLabelLastName() {
+        return labelLastName;
+    }
+
+    public JTextField getTextField1() {
+        return textField1;
+    }
+
+    public JLabel getParamForDel() {
+        return paramForDel;
+    }
+
+    public JRadioButton getGroup() {
+        return group;
+    }
+
+    public JRadioButton getTypeWork() {
+        return typeWork;
+    }
+
+    public JRadioButton getSumWorks() {
+        return sumWorks;
+    }
+
+    public ButtonGroup getrGroup() {
+        return rGroup;
+    }
+
+    public JTextField getTextField2() {
+        return textField2;
+    }
+
+    public JButton getButtonDel() {
+        return buttonDel;
+    }
 
     FrameDel(){
         frameDel = new JFrame("Удаление");
