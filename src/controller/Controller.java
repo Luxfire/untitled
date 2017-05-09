@@ -1,11 +1,13 @@
 package controller;
+import controller.studentListeners.AddStudentListener;
+
+import controller.studentListeners.DelListener;
+import controller.studentListeners.SearchListener;
 import model.*;
 import view.*;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -14,67 +16,46 @@ import java.util.List;
 public class Controller {
     MainWindow mainWindow;
     StudentList studentList;
-    FileWorker fileWorker;
     StudentList studentSearchList;
 
     public Controller() {
         studentSearchList = new StudentList();
         studentList = new StudentList();
         mainWindow = new MainWindow(studentList.getMaxNumberOfSemestre());
-        fileWorker = new FileWorker(studentList);
-
-               mainWindow.getFrameAddStudent().getButtonAdd().addActionListener(new ActionListener() {
-                 @Override
-                 public void actionPerformed(ActionEvent e) {
-                   List<String> planWorks = new ArrayList<>();
-                     for(int index = 0; index<studentList.getMaxNumberOfSemestre();index++){
-                     if(!mainWindow.getFrameAddStudent().getTextWork()[index].getText().equals(""))
-                         planWorks.add(mainWindow.getFrameAddStudent().getTextWork()[index].getText());
-                        else planWorks.add(" ");
-                       }
-
-                     if (!mainWindow.getFrameAddStudent().getTextFirstName().getText().isEmpty()
-                             && !mainWindow.getFrameAddStudent().getTextLastName().getText().isEmpty()
-                             && !mainWindow.getFrameAddStudent().getTextSurName().getText().isEmpty()
-                             && !mainWindow.getFrameAddStudent().getTextGroup().getText().isEmpty())
-                     {
-                         Student student = new Student(mainWindow.getFrameAddStudent().getTextLastName().getText(),
-                                 mainWindow.getFrameAddStudent().getTextFirstName().getText(),
-                                 mainWindow.getFrameAddStudent().getTextSurName().getText(),
-                                 Integer.parseInt(mainWindow.getFrameAddStudent().getTextGroup().getText()), planWorks);
-
-                         studentList.add(student);
-                         mainWindow.getFrameAddStudent().getFrameAdd().setVisible(false);
-                     } else JOptionPane.showMessageDialog(null, "Важные поля не заполнены!!!");
-                     updateSimpleWindow();
-                     mainWindow.getFrame().repaint();
+       FileWorker fileWorker = new FileWorker(studentList);
 
 
-                 }
-             });
-               mainWindow.getFrameSearch().getButtonSearch().addActionListener(new ActionListener() {
+        AddStudentListener addStudentAction = new AddStudentListener(mainWindow,studentList);
+        mainWindow.getFrameAddStudent().getButtonAdd().addActionListener(addStudentAction);
+
+        SearchListener searchListener = new SearchListener(studentList,studentSearchList,mainWindow,studentList.getMaxNumberOfSemestre());
+        mainWindow.getFrameSearch().getFrameSearchDel().getButton1().addActionListener(searchListener);
+
+        DelListener delListener = new DelListener(studentList,studentSearchList,mainWindow);
+        mainWindow.getFrameDel().getFrameSearchDel().getButton1().addActionListener(delListener);
+
+           /*    mainWindow.getFrameSearch().*//*getButtonSearch()*//*getFrameSearchDel().getButton1().addActionListener(new ActionListener() {
             int counterStudent =0;
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainWindow.getFrameSearch().getSearchTableModel().cleanTableModel(mainWindow.getFrameSearch().getFrameSearch(),studentList.getMaxNumberOfSemestre());
                 counterStudent=0;
                 studentSearchList.getStudentList().clear();
-                mainWindow.getFrameSearch().getSearchTableModel().setCurrentPage(1);
+                mainWindow.getFrameSearch().getTableSearchModel().setCurrentPage(1);
                 for (int index = 0; index < studentList.getStudentList().size(); index++) {
 
-                    if (mainWindow.getFrameSearch().getGroup().isSelected()) {
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameSearch().getTextField1().getText()) &&
-                                studentList.getStudentList().get(index).getGroup() == Integer.parseInt(mainWindow.getFrameSearch().getTextField2().getText())) {
+                   *//* if (mainWindow.getFrameSearch().getGroup().isSelected()) {*//*
+                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameSearch().*//*getTextField1()*//*getFrameSearchDel().getTextFieldFio1().getText()) &&
+                                studentList.getStudentList().get(index).getGroup() == Integer.parseInt(mainWindow.getFrameSearch().getFrameSearchDel().getTextField1().getText())) {
                             studentSearchList.add(studentList.getStudentList().get(index));
                             counterStudent++;
                         }
                     }
-                    if (mainWindow.getFrameSearch().getTypeWork().isSelected()) {
+                   *//* if (mainWindow.getFrameSearch().getTypeWork().isSelected()) {
 
                         if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameSearch().getTextField1().getText()))
                         {
                             for (int numberOfSem = 0; numberOfSem < studentList.getMaxNumberOfSemestre(); numberOfSem++){
-                                if (studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).equals(mainWindow.getFrameSearch().getTextField2().getText())){
+                                if (studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).equals(mainWindow.getFrameSearch().getTextField1().getText())){
                                     studentSearchList.add(studentList.getStudentList().get(index));
                                     counterStudent++;
                                     break;
@@ -91,13 +72,13 @@ public class Controller {
                             for (int numberOfSem = 0; numberOfSem <studentList.getMaxNumberOfSemestre(); numberOfSem++)
                                 if (!studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).equals(" "))
                                     sumsWork++;
-                            if (sumsWork == Integer.parseInt(mainWindow.getFrameSearch().getTextField2().getText())) {
+                            if (sumsWork == Integer.parseInt(mainWindow.getFrameSearch().getTextField1().getText())) {
                                 studentSearchList.add(studentList.getStudentList().get(index));
                                 counterStudent++;
                             }
                         }
                     }
-                }
+                }*//*
                 if(counterStudent == 0)
                     JOptionPane.showMessageDialog(null, "Записей не найдено");
                 updateSearchResult();
@@ -105,14 +86,13 @@ public class Controller {
 
 
             }
-        });
-               mainWindow.getFrameDel().getButtonDel().addActionListener(new ActionListener() {
+        });*/
+    /*          mainWindow.getFrameDel().getFrameSearchDel().getButton1().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int counterStudent = 0;
                 for (int index = 0; index < studentList.getStudentList().size(); index++) {
                     if (mainWindow.getFrameDel().getGroup().isSelected()) {
-
                         if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameDel().getTextField1().getText()) &&
                                 studentList.getStudentList().get(index).getGroup() == Integer.parseInt(mainWindow.getFrameDel().getTextField2().getText())) {
                             studentList.getStudentList().remove(index);
@@ -160,7 +140,7 @@ public class Controller {
                 mainWindow.getFrameDel().getFrameDel().setVisible(false);
             }
         });
-
+*/
                mainWindow.getTableModel().getButtonNextPage().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -208,7 +188,7 @@ public class Controller {
             }
         });
 
-               mainWindow.getFrameSearch().getSearchTableModel().getChangeNumStudentOnPage().addActionListener(new ActionListener() {
+             /*  mainWindow.getFrameSearch().getSearchTableModel().getChangeNumStudentOnPage().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Integer.parseInt(mainWindow.getFrameSearch().getSearchTableModel().getTextNumStudentOnPage().getText())<mainWindow.getFrameSearch().getSearchTableModel().getMaxStudentOnPage()){
@@ -253,15 +233,15 @@ public class Controller {
                 updateSearchResult();
                 mainWindow.getFrameSearch().getFrameSearch().repaint();
             }
-        });
+        });*/
 
-               mainWindow.saveFile.addActionListener(new ActionListener() {
+               mainWindow.getSaveFile().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fileWorker.saveFile();
             }
         });
-               mainWindow.openFile.addActionListener(new ActionListener() {
+               mainWindow.getOpenFile().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fileWorker.openFile();
@@ -274,21 +254,21 @@ public class Controller {
 
     void updateSearchResult() {
       int currentIndexLabel = 0;
-      mainWindow.getFrameSearch().getSearchTableModel().getPageFromPages().setText("Страница: "+mainWindow.getFrameSearch().getSearchTableModel().getCurrentPage()+"/"+mainWindow.getFrameSearch().getSearchTableModel().getNumberMaxPage(studentSearchList.getStudentList().size()));
-      for(int indexStudent=mainWindow.getFrameSearch().getSearchTableModel().getCurrentPage()*mainWindow.getFrameSearch().getSearchTableModel().getStudentOnPage()-mainWindow.getFrameSearch().getSearchTableModel().getStudentOnPage();
-          indexStudent<mainWindow.getFrameSearch().getSearchTableModel().getCurrentPage()*mainWindow.getFrameSearch().getSearchTableModel().getStudentOnPage() && indexStudent< studentSearchList.getStudentList().size();
+      mainWindow.getFrameSearch().getTableSearchModel().getPageFromPages().setText("Страница: "+mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()+"/"+mainWindow.getFrameSearch().getTableSearchModel().getNumberMaxPage(studentSearchList.getStudentList().size()));
+      for(int indexStudent=mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()*mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage()-mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage();
+          indexStudent<mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()*mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage() && indexStudent< studentSearchList.getStudentList().size();
           indexStudent++)
       {
           List<String> s = studentSearchList.getStudentList().get(indexStudent).getSemNumber();
-          mainWindow.getFrameSearch().getSearchTableModel().getStudentLastName()[currentIndexLabel].setText(studentSearchList.getStudentList().get(indexStudent).getLastName() + " "
+          mainWindow.getFrameSearch().getTableSearchModel().getStudentLastName()[currentIndexLabel].setText(studentSearchList.getStudentList().get(indexStudent).getLastName() + " "
                   + studentSearchList.getStudentList().get(indexStudent).getFirstName().substring(0, 1) + "."
                   + studentSearchList.getStudentList().get(indexStudent).getSurName().substring(0, 1) + ".");
-          mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getSearchTableModel().getStudentLastName()[currentIndexLabel]);
-          mainWindow.getFrameSearch().getSearchTableModel().getStudentGroup()[currentIndexLabel].setText(Integer.toString(studentSearchList.getStudentList().get(indexStudent).getGroup()));
-          mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getSearchTableModel().getStudentGroup()[currentIndexLabel]);
+          mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentLastName()[currentIndexLabel]);
+          mainWindow.getFrameSearch().getTableSearchModel().getStudentGroup()[currentIndexLabel].setText(Integer.toString(studentSearchList.getStudentList().get(indexStudent).getGroup()));
+          mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentGroup()[currentIndexLabel]);
           for (int indexSem = 0; indexSem < studentList.getMaxNumberOfSemestre(); indexSem++){
-              mainWindow.getFrameSearch().getSearchTableModel().getStudentSem()[currentIndexLabel][indexSem].setText(s.get(indexSem));
-              mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getSearchTableModel().getStudentSem()[currentIndexLabel][indexSem]);}
+              mainWindow.getFrameSearch().getTableSearchModel().getStudentSem()[currentIndexLabel][indexSem].setText(s.get(indexSem));
+              mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentSem()[currentIndexLabel][indexSem]);}
           currentIndexLabel++;
       }
 
