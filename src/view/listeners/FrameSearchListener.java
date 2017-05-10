@@ -18,8 +18,10 @@ public class FrameSearchListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       /* frameSearch.getTextField1().setText("");
-        frameSearch.getTextField1().setText("");*/
+        frameSearch.getFrameSearchDel().getTextFieldFio1().setText("");
+        frameSearch.getFrameSearchDel().getTextField1().setText("");
+        frameSearch.getFrameSearchDel().getTextField2().setText("");
+        frameSearch.getFrameSearchDel().getTextField3().setText("");
         frameSearch.getFrameSearch().setVisible(true);
     }
 }

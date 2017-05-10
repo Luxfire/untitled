@@ -1,8 +1,6 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 
 /**
  * Created by user on 09.04.2017.

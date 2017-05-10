@@ -1,299 +1,98 @@
 package controller;
-import controller.studentListeners.AddStudentListener;
-
-import controller.studentListeners.DelListener;
-import controller.studentListeners.SearchListener;
+import controller.listeners.fileListeners.OpenFileListener;
+import controller.listeners.fileListeners.SaveFileListener;
+import controller.listeners.tableListeners.*;
+import controller.listeners.studentListeners.AddStudentListener;
+import controller.listeners.studentListeners.DelListener;
+import controller.listeners.studentListeners.SearchListener;
 import model.*;
 import view.*;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * Created by user on 11.04.2017.
  */
 public class Controller {
-    MainWindow mainWindow;
-    StudentList studentList;
-    StudentList studentSearchList;
+    private MainWindow mainWindow;
+    private StudentList studentList;
+    private StudentList studentSearchList;
+    private UpdateWindow updateMainWindow;
+    private UpdateWindow updateSearchWindow;
+    private FileWorker fileWorker;
 
     public Controller() {
         studentSearchList = new StudentList();
         studentList = new StudentList();
+
         mainWindow = new MainWindow(studentList.getMaxNumberOfSemestre());
-       FileWorker fileWorker = new FileWorker(studentList);
 
+        updateMainWindow = new UpdateWindow(mainWindow.getFrame(),mainWindow.getTableModel(),studentList);
+        updateSearchWindow = new UpdateWindow(mainWindow.getFrameSearch().getFrameSearch(),mainWindow.getFrameSearch().getTableSearchModel(),studentSearchList);
 
-        AddStudentListener addStudentAction = new AddStudentListener(mainWindow,studentList);
-        mainWindow.getFrameAddStudent().getButtonAdd().addActionListener(addStudentAction);
+        fileWorker = new FileWorker(studentList);
 
-        SearchListener searchListener = new SearchListener(studentList,studentSearchList,mainWindow,studentList.getMaxNumberOfSemestre());
-        mainWindow.getFrameSearch().getFrameSearchDel().getButton1().addActionListener(searchListener);
+        createStudentListeners();
+        createMainWindowListeners();
+        createSearchFrameListeners();
+        createFileListeners();
 
-        DelListener delListener = new DelListener(studentList,studentSearchList,mainWindow);
-        mainWindow.getFrameDel().getFrameSearchDel().getButton1().addActionListener(delListener);
+    }
+             void  createStudentListeners()
+             {
+                 AddStudentListener addStudentAction = new AddStudentListener(mainWindow,studentList,updateMainWindow);
+                 mainWindow.getFrameAddStudent().getButtonAdd().addActionListener(addStudentAction);
 
-           /*    mainWindow.getFrameSearch().*//*getButtonSearch()*//*getFrameSearchDel().getButton1().addActionListener(new ActionListener() {
-            int counterStudent =0;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                counterStudent=0;
-                studentSearchList.getStudentList().clear();
-                mainWindow.getFrameSearch().getTableSearchModel().setCurrentPage(1);
-                for (int index = 0; index < studentList.getStudentList().size(); index++) {
+                 SearchListener searchListener = new SearchListener(studentList,studentSearchList,mainWindow,studentList.getMaxNumberOfSemestre(),updateSearchWindow);
+                 mainWindow.getFrameSearch().getFrameSearchDel().getButton1().addActionListener(searchListener);
 
-                   *//* if (mainWindow.getFrameSearch().getGroup().isSelected()) {*//*
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameSearch().*//*getTextField1()*//*getFrameSearchDel().getTextFieldFio1().getText()) &&
-                                studentList.getStudentList().get(index).getGroup() == Integer.parseInt(mainWindow.getFrameSearch().getFrameSearchDel().getTextField1().getText())) {
-                            studentSearchList.add(studentList.getStudentList().get(index));
-                            counterStudent++;
-                        }
-                    }
-                   *//* if (mainWindow.getFrameSearch().getTypeWork().isSelected()) {
+                 DelListener delListener = new DelListener(studentList,mainWindow,updateMainWindow);
+                 mainWindow.getFrameDel().getFrameSearchDel().getButton1().addActionListener(delListener);
+             }
 
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameSearch().getTextField1().getText()))
-                        {
-                            for (int numberOfSem = 0; numberOfSem < studentList.getMaxNumberOfSemestre(); numberOfSem++){
-                                if (studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).equals(mainWindow.getFrameSearch().getTextField1().getText())){
-                                    studentSearchList.add(studentList.getStudentList().get(index));
-                                    counterStudent++;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+             void createMainWindowListeners()
+             {
+                FirstPageListener firstPageListenerMain = new FirstPageListener(mainWindow.getFrame(),mainWindow.getTableModel(),studentList,updateMainWindow);
+                mainWindow.getTableModel().getButtonFirstPage().addActionListener(firstPageListenerMain);
 
-                    if (mainWindow.getFrameSearch().getSumWorks().isSelected()) {
-                        int sumsWork = 0;
+                NextPageListener nextPageListenerMain = new NextPageListener(mainWindow.getFrame(),mainWindow.getTableModel(),studentList,updateMainWindow);
+                mainWindow.getTableModel().getButtonNextPage().addActionListener(nextPageListenerMain);
 
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameSearch().getTextField1().getText())) {
+                PrevPageListener prevPageListenerMain = new PrevPageListener(mainWindow.getFrame(),mainWindow.getTableModel(),studentList,updateMainWindow);
+                mainWindow.getTableModel().getButtonPrevPage().addActionListener(prevPageListenerMain);
 
-                            for (int numberOfSem = 0; numberOfSem <studentList.getMaxNumberOfSemestre(); numberOfSem++)
-                                if (!studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).equals(" "))
-                                    sumsWork++;
-                            if (sumsWork == Integer.parseInt(mainWindow.getFrameSearch().getTextField1().getText())) {
-                                studentSearchList.add(studentList.getStudentList().get(index));
-                                counterStudent++;
-                            }
-                        }
-                    }
-                }*//*
-                if(counterStudent == 0)
-                    JOptionPane.showMessageDialog(null, "Записей не найдено");
-                updateSearchResult();
-                mainWindow.getFrameSearch().getFrameSearch().repaint();
+                LastPageListener lastPageListenerMain = new LastPageListener(mainWindow.getFrame(),mainWindow.getTableModel(),studentList,updateMainWindow);
+                mainWindow.getTableModel().getButtonLastPage().addActionListener(lastPageListenerMain);
 
+                ChangeStudentOnPageListener changeStudentOnPageListenerMain = new ChangeStudentOnPageListener(mainWindow.getFrame(),mainWindow.getTableModel(),studentList,updateMainWindow);
+                mainWindow.getTableModel().getChangeNumStudentOnPage().addActionListener(changeStudentOnPageListenerMain);
 
             }
-        });*/
-    /*          mainWindow.getFrameDel().getFrameSearchDel().getButton1().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int counterStudent = 0;
-                for (int index = 0; index < studentList.getStudentList().size(); index++) {
-                    if (mainWindow.getFrameDel().getGroup().isSelected()) {
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameDel().getTextField1().getText()) &&
-                                studentList.getStudentList().get(index).getGroup() == Integer.parseInt(mainWindow.getFrameDel().getTextField2().getText())) {
-                            studentList.getStudentList().remove(index);
-                            counterStudent++;
-                            index--;
-                            if(index<0) index=0;
-                        }
-                    }
 
-                    if (mainWindow.getFrameDel().getTypeWork().isSelected()) {
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameDel().getTextField1().getText())) {
-                            for (int numberOfSem = 0; numberOfSem < studentList.getMaxNumberOfSemestre(); numberOfSem++)
-                                if (studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).equals(mainWindow.getFrameDel().getTextField2().getText())) {
+             void createSearchFrameListeners()
+             {
+                 FirstPageListener firstPageListenerSearch = new FirstPageListener(mainWindow.getFrameSearch().getFrameSearch(),mainWindow.getFrameSearch().getTableSearchModel(),studentSearchList,updateSearchWindow);
+                 mainWindow.getFrameSearch().getTableSearchModel().getButtonFirstPage().addActionListener(firstPageListenerSearch);
 
-                                    studentList.getStudentList().remove(index);
-                                    counterStudent++;
-                                    index--;
-                                    if(index<0) index=0;
-                                }
-                        }
-                    }
+                 NextPageListener nextPageListenerSearch = new NextPageListener(mainWindow.getFrameSearch().getFrameSearch(),mainWindow.getFrameSearch().getTableSearchModel(),studentSearchList,updateSearchWindow);
+                 mainWindow.getFrameSearch().getTableSearchModel().getButtonNextPage().addActionListener(nextPageListenerSearch);
 
-                    if (mainWindow.getFrameDel().getSumWorks().isSelected()) {
-                        int sumsWork = 0;
+                 PrevPageListener prevPageListenerSearch = new PrevPageListener(mainWindow.getFrameSearch().getFrameSearch(),mainWindow.getFrameSearch().getTableSearchModel(),studentSearchList,updateSearchWindow);
+                 mainWindow.getFrameSearch().getTableSearchModel().getButtonPrevPage().addActionListener(prevPageListenerSearch);
 
-                        if (studentList.getStudentList().get(index).getLastName().equals(mainWindow.getFrameDel().getTextField1().getText())) {
-                            for (int numberOfSem = 0; numberOfSem < studentList.getMaxNumberOfSemestre(); numberOfSem++)
-                                if (!studentList.getStudentList().get(index).getSemNumber().get(numberOfSem).isEmpty()) {
-                                    sumsWork++;
-                                }
-                            if (sumsWork == Integer.parseInt(mainWindow.getFrameDel().getTextField2().getText())) {
-                                studentList.getStudentList().remove(index);
-                                counterStudent++;
-                                index--;
-                                if(index<0) index=0;
-                            }
-                        }
-                    }
-                }
-                JOptionPane.showMessageDialog(null, "Удалено записей " + counterStudent);
-                mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                updateSimpleWindow();
-                mainWindow.getFrame().repaint();
-                mainWindow.getTableModel().setCurrentPage(1);
-                mainWindow.getFrameDel().getFrameDel().setVisible(false);
-            }
-        });
-*/
-               mainWindow.getTableModel().getButtonNextPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getTableModel().nextPage(studentList.getStudentList().size());
-                mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                updateSimpleWindow();
-                mainWindow.getFrame().repaint();
-            }
-        });
-               mainWindow.getTableModel().getButtonPrevPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getTableModel().prevPage();
-                mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                updateSimpleWindow();
-                mainWindow.getFrame().repaint();
-            }
-        });
-               mainWindow.getTableModel().getButtonLastPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getTableModel().lastPage(studentList.getStudentList().size());
-                mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                updateSimpleWindow();
-                mainWindow.getFrame().repaint();
-            }
-        });
-               mainWindow.getTableModel().getButtonFirstPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getTableModel().firstPage();
-                mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                updateSimpleWindow();
-                mainWindow.getFrame().repaint();
-            }
-        });
-               mainWindow.getTableModel().getChangeNumStudentOnPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(Integer.parseInt(mainWindow.getTableModel().getTextNumStudentOnPage().getText())<mainWindow.getTableModel().getMaxStudentOnPage()+1){
-                    mainWindow.getTableModel().setStudentOnPage(Integer.parseInt(mainWindow.getTableModel().getTextNumStudentOnPage().getText()));
-                    mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                    updateSimpleWindow();
-                    mainWindow.getFrame().repaint();}
-            }
-        });
+                 LastPageListener lastPageListenerSearch = new LastPageListener(mainWindow.getFrameSearch().getFrameSearch(),mainWindow.getFrameSearch().getTableSearchModel(),studentSearchList,updateSearchWindow);
+                 mainWindow.getFrameSearch().getTableSearchModel().getButtonLastPage().addActionListener(lastPageListenerSearch);
 
-             /*  mainWindow.getFrameSearch().getSearchTableModel().getChangeNumStudentOnPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(Integer.parseInt(mainWindow.getFrameSearch().getSearchTableModel().getTextNumStudentOnPage().getText())<mainWindow.getFrameSearch().getSearchTableModel().getMaxStudentOnPage()){
-                    mainWindow.getFrameSearch().getSearchTableModel().setStudentOnPage(Integer.parseInt(mainWindow.getFrameSearch().getSearchTableModel().getTextNumStudentOnPage().getText()));
-                    mainWindow.getFrameSearch().getSearchTableModel().cleanTableModel(mainWindow.getFrameSearch().getFrameSearch(),studentList.getMaxNumberOfSemestre());
-                    updateSearchResult();
-                    mainWindow.getFrameSearch().getFrameSearch().repaint();}
-            }
-        });
-               mainWindow.getFrameSearch().getSearchTableModel().getButtonNextPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getFrameSearch().getSearchTableModel().nextPage(studentSearchList.getStudentList().size());
-                mainWindow.getFrameSearch().getSearchTableModel().cleanTableModel(mainWindow.getFrameSearch().getFrameSearch(),studentList.getMaxNumberOfSemestre());
-                updateSearchResult();
-                mainWindow.getFrameSearch().getFrameSearch().repaint();
-            }
-        });
-               mainWindow.getFrameSearch().getSearchTableModel().getButtonPrevPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getFrameSearch().getSearchTableModel().prevPage();
-                mainWindow.getFrameSearch().getSearchTableModel().cleanTableModel(mainWindow.getFrameSearch().getFrameSearch(),studentList.getMaxNumberOfSemestre());
-                updateSearchResult();
-                mainWindow.getFrameSearch().getFrameSearch().repaint();
-            }
-        });
-               mainWindow.getFrameSearch().getSearchTableModel().getButtonLastPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getFrameSearch().getSearchTableModel().lastPage(studentSearchList.getStudentList().size());
-                mainWindow.getFrameSearch().getSearchTableModel().cleanTableModel(mainWindow.getFrameSearch().getFrameSearch(),studentList.getMaxNumberOfSemestre());
-                updateSearchResult();
-                mainWindow.getFrameSearch().getFrameSearch().repaint();
-            }
-        });
-               mainWindow.getFrameSearch().getSearchTableModel().getButtonFirstPage().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.getFrameSearch().getSearchTableModel().firstPage();
-                mainWindow.getFrameSearch().getSearchTableModel().cleanTableModel(mainWindow.getFrameSearch().getFrameSearch(),studentList.getMaxNumberOfSemestre());
-                updateSearchResult();
-                mainWindow.getFrameSearch().getFrameSearch().repaint();
-            }
-        });*/
+                 ChangeStudentOnPageListener changeStudentOnPageListenerSearch = new ChangeStudentOnPageListener(mainWindow.getFrameSearch().getFrameSearch(),mainWindow.getFrameSearch().getTableSearchModel(),studentSearchList,updateSearchWindow);
+                 mainWindow.getFrameSearch().getTableSearchModel().getChangeNumStudentOnPage().addActionListener(changeStudentOnPageListenerSearch);
 
-               mainWindow.getSaveFile().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fileWorker.saveFile();
-            }
-        });
-               mainWindow.getOpenFile().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fileWorker.openFile();
-                mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-                updateSimpleWindow();
-                mainWindow.getFrame().repaint();
-            }
-        });
-            }
+             }
 
-    void updateSearchResult() {
-      int currentIndexLabel = 0;
-      mainWindow.getFrameSearch().getTableSearchModel().getPageFromPages().setText("Страница: "+mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()+"/"+mainWindow.getFrameSearch().getTableSearchModel().getNumberMaxPage(studentSearchList.getStudentList().size()));
-      for(int indexStudent=mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()*mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage()-mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage();
-          indexStudent<mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()*mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage() && indexStudent< studentSearchList.getStudentList().size();
-          indexStudent++)
-      {
-          List<String> s = studentSearchList.getStudentList().get(indexStudent).getSemNumber();
-          mainWindow.getFrameSearch().getTableSearchModel().getStudentLastName()[currentIndexLabel].setText(studentSearchList.getStudentList().get(indexStudent).getLastName() + " "
-                  + studentSearchList.getStudentList().get(indexStudent).getFirstName().substring(0, 1) + "."
-                  + studentSearchList.getStudentList().get(indexStudent).getSurName().substring(0, 1) + ".");
-          mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentLastName()[currentIndexLabel]);
-          mainWindow.getFrameSearch().getTableSearchModel().getStudentGroup()[currentIndexLabel].setText(Integer.toString(studentSearchList.getStudentList().get(indexStudent).getGroup()));
-          mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentGroup()[currentIndexLabel]);
-          for (int indexSem = 0; indexSem < studentList.getMaxNumberOfSemestre(); indexSem++){
-              mainWindow.getFrameSearch().getTableSearchModel().getStudentSem()[currentIndexLabel][indexSem].setText(s.get(indexSem));
-              mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentSem()[currentIndexLabel][indexSem]);}
-          currentIndexLabel++;
-      }
+             void createFileListeners()
+             {
+                 OpenFileListener openFileListener = new OpenFileListener(updateMainWindow,fileWorker);
+                 mainWindow.getOpenFile().addActionListener(openFileListener);
 
-  }
-
-    void updateSimpleWindow() {
-       int currentIndexLabel = 0;
-       mainWindow.getTableModel().getPageFromPages().setText("Страница: "+mainWindow.getTableModel().getCurrentPage()+"/"+mainWindow.getTableModel().getNumberMaxPage(studentList.getStudentList().size()));
-    for(int indexStudent=mainWindow.getTableModel().getCurrentPage()*mainWindow.getTableModel().getStudentOnPage()-mainWindow.getTableModel().getStudentOnPage();
-        indexStudent<mainWindow.getTableModel().getCurrentPage()*mainWindow.getTableModel().getStudentOnPage() && indexStudent< studentList.getStudentList().size();
-        indexStudent++)
-   {
-       List<String> s = studentList.getStudentList().get(indexStudent).getSemNumber();
-       mainWindow.getTableModel().getStudentLastName()[currentIndexLabel].setText(studentList.getStudentList().get(indexStudent).getLastName() + " "
-               + studentList.getStudentList().get(indexStudent).getFirstName().substring(0, 1) + "."
-               + studentList.getStudentList().get(indexStudent).getSurName().substring(0, 1) + ".");
-       mainWindow.getFrame().add(mainWindow.getTableModel().getStudentLastName()[currentIndexLabel]);
-       mainWindow.getTableModel().getStudentGroup()[currentIndexLabel].setText(Integer.toString(studentList.getStudentList().get(indexStudent).getGroup()));
-       mainWindow.getFrame().add(mainWindow.getTableModel().getStudentGroup()[currentIndexLabel]);
-       for (int indexSem = 0; indexSem < studentList.getMaxNumberOfSemestre(); indexSem++){
-            mainWindow.getTableModel().getStudentSem()[currentIndexLabel][indexSem].setText(s.get(indexSem));
-           mainWindow.getFrame().add(mainWindow.getTableModel().getStudentSem()[currentIndexLabel][indexSem]);}
-       currentIndexLabel++;
-   }
-
-   }
+                 SaveFileListener saveFileListener = new SaveFileListener(fileWorker);
+                 mainWindow.getSaveFile().addActionListener(saveFileListener);
+             }
 
 }

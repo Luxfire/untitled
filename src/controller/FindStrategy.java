@@ -1,9 +1,6 @@
 package controller;
 
 import view.FrameSearchDel;
-import view.MainWindow;
-
-import javax.swing.*;
 
 /**
  * Created by user on 09.05.2017.

@@ -1,26 +1,28 @@
-package controller.studentListeners;
+package controller.listeners.studentListeners;
 
 import controller.FindStrategy;
+import controller.UpdateWindow;
 import model.StudentList;
 import view.MainWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * Created by user on 09.05.2017.
  */
 public class SearchListener implements ActionListener {
-    FindStrategy findStrategy;
-    StudentList studentList;
-    StudentList studentSearchList;
-    MainWindow mainWindow;
-    int maxNumberOfSemestr;
-    public SearchListener( StudentList studentList, StudentList studentSearchList, MainWindow mainWindow,int maxNumberOfSemestr)
+    private FindStrategy findStrategy;
+    private StudentList studentList;
+    private StudentList studentSearchList;
+    private MainWindow mainWindow;
+    private UpdateWindow updateSearchWindow;
+    private int maxNumberOfSemestr;
+    public SearchListener( StudentList studentList, StudentList studentSearchList, MainWindow mainWindow,int maxNumberOfSemestr, UpdateWindow updateSearchWindow)
     {
         findStrategy = new FindStrategy(mainWindow.getFrameSearch().getFrameSearchDel()) ;
+        this.updateSearchWindow = updateSearchWindow;
         this.studentList = studentList;
         this.studentSearchList = studentSearchList;
         this.mainWindow = mainWindow;
@@ -79,11 +81,10 @@ public class SearchListener implements ActionListener {
             if(strategy==6) JOptionPane.showMessageDialog(null, "Фамилия не введена");
         if(counterStudent == 0)
             JOptionPane.showMessageDialog(null, "Записей не найдено");
-        updateSearchResult();
-        mainWindow.getFrameSearch().getFrameSearch().repaint();
+        updateSearchWindow.updateSimpleWindow();
     }
 
-    void updateSearchResult() {
+   /* void updateSearchResult() {
         int currentIndexLabel = 0;
         mainWindow.getFrameSearch().getTableSearchModel().getPageFromPages().setText("Страница: "+mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()+"/"+mainWindow.getFrameSearch().getTableSearchModel().getNumberMaxPage(studentSearchList.getStudentList().size()));
         for(int indexStudent=mainWindow.getFrameSearch().getTableSearchModel().getCurrentPage()*mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage()-mainWindow.getFrameSearch().getTableSearchModel().getStudentOnPage();
@@ -101,8 +102,8 @@ public class SearchListener implements ActionListener {
                 mainWindow.getFrameSearch().getTableSearchModel().getStudentSem()[currentIndexLabel][indexSem].setText(s.get(indexSem));
                 mainWindow.getFrameSearch().getFrameSearch().add(mainWindow.getFrameSearch().getTableSearchModel().getStudentSem()[currentIndexLabel][indexSem]);}
             currentIndexLabel++;
-        }
+        }}*/
 
     }
-    }
+
 

@@ -81,6 +81,7 @@ public class TableModel {
         return studentOnPage;
     }
 
+
     TableModel(int yLocation, JPanel panel,int maxNumberOfSemestr)
     { currentPage = 1;
       studentOnPage = 3;
@@ -222,4 +223,6 @@ public class TableModel {
     {
         return ((counter - 1)/ studentOnPage) + 1;
     }
+
+
 }

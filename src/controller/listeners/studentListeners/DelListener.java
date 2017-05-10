@@ -1,13 +1,13 @@
-package controller.studentListeners;
+package controller.listeners.studentListeners;
 
 import controller.FindStrategy;
+import controller.UpdateWindow;
 import model.StudentList;
 import view.MainWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * Created by user on 09.05.2017.
@@ -15,15 +15,16 @@ import java.util.List;
 public class DelListener implements ActionListener {
     private FindStrategy findStrategy;
     private StudentList studentList;
-    private StudentList studentSearchList;
     private MainWindow mainWindow;
+    private UpdateWindow updateMainWindow;
 
-    public DelListener(StudentList studentList, StudentList studentSearchList, MainWindow mainWindow)
+
+    public DelListener(StudentList studentList, MainWindow mainWindow,UpdateWindow updateMainWindow)
     {
         findStrategy = new FindStrategy(mainWindow.getFrameDel().getFrameSearchDel()) ;
         this.studentList = studentList;
-        this.studentSearchList = studentSearchList;
         this.mainWindow = mainWindow;
+        this.updateMainWindow = updateMainWindow;
 
     }
 
@@ -84,30 +85,7 @@ public class DelListener implements ActionListener {
             JOptionPane.showMessageDialog(null, "Записей не найдено");
 
         if (counterStudent>0) JOptionPane.showMessageDialog(null, "Записей удалено "+counterStudent);
-        updateSimpleWindow();
-        mainWindow.getFrame().repaint();
-
-    }
-    void updateSimpleWindow() {
-        int currentIndexLabel = 0;
-        mainWindow.getTableModel().cleanTableModel(mainWindow.getFrame(),studentList.getMaxNumberOfSemestre());
-        mainWindow.getTableModel().getPageFromPages().setText("Страница: "+mainWindow.getTableModel().getCurrentPage()+"/"+mainWindow.getTableModel().getNumberMaxPage(studentList.getStudentList().size()));
-        for(int indexStudent=mainWindow.getTableModel().getCurrentPage()*mainWindow.getTableModel().getStudentOnPage()-mainWindow.getTableModel().getStudentOnPage();
-            indexStudent<mainWindow.getTableModel().getCurrentPage()*mainWindow.getTableModel().getStudentOnPage() && indexStudent< studentList.getStudentList().size();
-            indexStudent++)
-        {
-            List<String> s = studentList.getStudentList().get(indexStudent).getSemNumber();
-            mainWindow.getTableModel().getStudentLastName()[currentIndexLabel].setText(studentList.getStudentList().get(indexStudent).getLastName() + " "
-                    + studentList.getStudentList().get(indexStudent).getFirstName().substring(0, 1) + "."
-                    + studentList.getStudentList().get(indexStudent).getSurName().substring(0, 1) + ".");
-            mainWindow.getFrame().add(mainWindow.getTableModel().getStudentLastName()[currentIndexLabel]);
-            mainWindow.getTableModel().getStudentGroup()[currentIndexLabel].setText(Integer.toString(studentList.getStudentList().get(indexStudent).getGroup()));
-            mainWindow.getFrame().add(mainWindow.getTableModel().getStudentGroup()[currentIndexLabel]);
-            for (int indexSem = 0; indexSem < studentList.getMaxNumberOfSemestre(); indexSem++){
-                mainWindow.getTableModel().getStudentSem()[currentIndexLabel][indexSem].setText(s.get(indexSem));
-                mainWindow.getFrame().add(mainWindow.getTableModel().getStudentSem()[currentIndexLabel][indexSem]);}
-            currentIndexLabel++;
-        }
+       updateMainWindow.updateSimpleWindow();
 
     }
 }

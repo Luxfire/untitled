@@ -19,8 +19,10 @@ public class FrameDelListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        /*frameDel.getTextField1().setText("");
-        frameDel.getTextField2().setText("");*/
+        frameDel.getFrameSearchDel().getTextFieldFio1().setText("");
+        frameDel.getFrameSearchDel().getTextField1().setText("");
+        frameDel.getFrameSearchDel().getTextField2().setText("");
+        frameDel.getFrameSearchDel().getTextField3().setText("");
         frameDel.getFrameDel().setVisible(true);
     }
 }

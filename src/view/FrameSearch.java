@@ -10,7 +10,8 @@ public class FrameSearch {
     private JFrame frameSearch;
     private JPanel panel;
     private FrameSearchDel frameSearchDel;
- private TableModel tableSearchModel;
+    private TableModel tableSearchModel;
+
     public JPanel getPanel() {
         return panel;
     }
@@ -22,7 +23,6 @@ public class FrameSearch {
     public FrameSearchDel getFrameSearchDel() {
         return frameSearchDel;
     }
-
 
     public JFrame getFrameSearch() {
         return frameSearch;
