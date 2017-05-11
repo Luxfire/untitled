@@ -27,7 +27,7 @@ public class ChangeStudentOnPageListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if(Integer.parseInt(tableModel.getTextNumStudentOnPage().getText())<tableModel.getMaxStudentOnPage()){
+        if(Integer.parseInt(tableModel.getTextNumStudentOnPage().getText())<=tableModel.getMaxStudentOnPage()){
             tableModel.setStudentOnPage(Integer.parseInt(tableModel.getTextNumStudentOnPage().getText()));
             tableModel.cleanTableModel(frame,studentList.getMaxNumberOfSemestre());
             updateMainWindow.updateSimpleWindow();

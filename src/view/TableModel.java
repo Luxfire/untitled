@@ -84,8 +84,8 @@ public class TableModel {
 
     TableModel(int yLocation, JPanel panel,int maxNumberOfSemestr)
     { currentPage = 1;
-      studentOnPage = 3;
-      maxStudentOnPage = 5;
+      studentOnPage = 5;
+      maxStudentOnPage = 10;
 
        JLabel labelFio = new JLabel("Фио");
         labelFio.setSize(200, 30);
@@ -110,43 +110,43 @@ public class TableModel {
 
         buttonFirstPage = new JButton("<<");
         buttonFirstPage.setSize(50,30);
-        buttonFirstPage.setLocation(0,yLocation+180);
+        buttonFirstPage.setLocation(0,yLocation+330);
         panel.add(buttonFirstPage);
 
         buttonPrevPage = new JButton("<");
         buttonPrevPage.setSize(50,30);
-        buttonPrevPage.setLocation(50,yLocation+180);
+        buttonPrevPage.setLocation(50,yLocation+330);
         panel.add(buttonPrevPage);
 
         buttonNextPage = new JButton(">");
         buttonNextPage.setSize(50,30);
-        buttonNextPage.setLocation(100,yLocation+180);
+        buttonNextPage.setLocation(100,yLocation+330);
         panel.add(buttonNextPage);
         buttonLastPage = new JButton(">>");
         buttonLastPage.setSize(50,30);
-        buttonLastPage.setLocation(150,yLocation+180);
+        buttonLastPage.setLocation(150,yLocation+330);
         panel.add(buttonLastPage);
 
         pageFromPages = new JLabel();
         pageFromPages.setSize(100,30);
-        pageFromPages.setLocation(200,yLocation+180);
+        pageFromPages.setLocation(200,yLocation+330);
         pageFromPages.setText("Cтраница: "+1+"/"+1);
         panel.add(pageFromPages);
 
         JLabel labelNumStudentOnPage = new JLabel();
         labelNumStudentOnPage.setText("Количество студентов на странице:");
-        labelNumStudentOnPage.setLocation(0,yLocation+210);
+        labelNumStudentOnPage.setLocation(0,yLocation+360);
         labelNumStudentOnPage.setSize(210,30);
         panel.add(labelNumStudentOnPage);
 
-        textNumStudentOnPage = new JTextField("3");
+        textNumStudentOnPage = new JTextField("5");
         textNumStudentOnPage.setSize(30,30);
-        textNumStudentOnPage.setLocation(210,yLocation+210);
+        textNumStudentOnPage.setLocation(210,yLocation+360);
         panel.add(textNumStudentOnPage);
 
         changeNumStudentOnPage = new JButton("Изменить");
         changeNumStudentOnPage.setSize(100,30);
-        changeNumStudentOnPage.setLocation(240,yLocation+210);
+        changeNumStudentOnPage.setLocation(240,yLocation+360);
         panel.add(changeNumStudentOnPage);
 
         createTableModel(yLocation,maxNumberOfSemestr);
